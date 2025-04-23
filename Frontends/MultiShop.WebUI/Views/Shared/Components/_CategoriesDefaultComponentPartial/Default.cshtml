@@ -1,0 +1,28 @@
+﻿@model List<ResultCategoryDto>
+
+<div class="container-fluid pt-5">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+        <span class="bg-secondary pr-3">Öne Çıkan Kategoriler</span>
+    </h2>
+    <div class="row px-xl-5 pb-3">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                <a class="text-decoration-none" href="">
+                    <div class="cat-item d-flex align-items-center mb-4 p-3 border rounded shadow-sm">
+                        <div class="d-flex justify-content-center align-items-center overflow-hidden"
+                             style="width: 100px; height: 100px; flex-shrink: 0;">
+                            <img class="img-fluid" src="@item.ImageUrl" alt=""
+                                 style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                        </div>
+                        <div class="flex-fill pl-3">
+                            <h6 class="mb-1">@item.CategoryName</h6>
+                            <small class="text-muted">0 Ürün</small>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+

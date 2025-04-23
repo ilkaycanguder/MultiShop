@@ -1,0 +1,66 @@
+﻿﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/AdminLayout/Index.cshtml";
+}
+
+@section Scripts {
+    <script src="~/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // URL'yi doğrudan yazalım (sonra ViewBag ile değiştireceğiz)
+            const hubUrl = "@ViewBag.SignalRUrl/signalrhub";
+            console.log("Bağlanılacak Hub URL:", hubUrl);
+
+            // Connection oluştur
+            var connection = new signalR.HubConnectionBuilder()
+                .withUrl(hubUrl)
+                .withAutomaticReconnect()
+                .build();
+
+            // Başlangıçta durumu göster
+            $("#connstatus").text(connection.state);
+
+            // Bağlantıyı başlat
+            connection.start().then(function () {
+                console.log("SignalR bağlantısı başarılı:", connection.state);
+                $("#connstatus").text(connection.state);
+                // Bağlantı başarılı olduktan sonra SendStatisticCount metodunu çağır
+                connection.invoke("SendStatisticCount", "1")
+                    .catch(function (err) {
+                        console.error("Invoke hatası:", err);
+                    });
+            }).catch(function (err) {
+                console.error("Bağlantı hatası:", err);
+                $("#connstatus").text("Bağlantı hatası: " + err);
+            });
+
+            // Yorum sayısını alma
+            connection.on("ReceiveCommentCount", function (getTotalCommentCount) {
+                console.log("Yorum sayısı alındı:", getTotalCommentCount);
+                $("#commentcount").text(getTotalCommentCount);
+            });
+
+            // Mesaj sayısını alma
+            connection.on("ReceiveMessageCount", function (getTotalMessageCount) {
+                console.log("Mesaj sayısı alındı:", getTotalMessageCount);
+                $("#messagecount").text(getTotalMessageCount);
+            });
+        });
+    </script>
+}
+
+<section class="content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="chart-box">
+                <div class="bs-example" data-example-id="bordered-table">
+                    <div class="col-md-8 offset-2">
+                        <div class="alert alert-primary">Bağlantının Durumu: <strong id="connstatus"></strong></div>
+                        <div class="alert alert-primary">Yorum Sayısı: <strong id="commentcount"></strong></div>
+                        <div class="alert alert-primary">Mesaj Sayısı: <strong id="messagecount"></strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

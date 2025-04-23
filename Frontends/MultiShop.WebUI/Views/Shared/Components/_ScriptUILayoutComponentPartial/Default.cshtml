@@ -1,0 +1,29 @@
+﻿<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="~/online-shop-website-template/lib/easing/easing.min.js"></script>
+<script src="~/online-shop-website-template/lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="~/online-shop-website-template/mail/jqBootstrapValidation.min.js"></script>
+<script src="~/online-shop-website-template/mail/contact.js"></script>
+<script src="~/online-shop-website-template/js/main.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Bootstrap dropdown toggle'ı manuel aktifleştirme
+        $('.dropdown-toggle').dropdown();
+
+        // Collapse bileşeninin manuel aktivasyonu
+        $('.collapse').on('click', function () {
+            $(this).collapse('toggle');
+        });
+
+        // Navbar-vertical için özel collapse davranışı
+        $('[data-toggle="collapse"]').on('click', function () {
+            const target = $(this).attr('href');
+            $(target).collapse('toggle');
+            return false;
+        });
+    });
+</script>

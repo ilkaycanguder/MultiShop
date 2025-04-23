@@ -1,0 +1,51 @@
+﻿@model List<ECommerceViewModel.Product>
+@{
+    Layout = null;
+}
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container mt-4">
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th>
+                <th>Ürün Başlığı</th>
+                <th>Ürün Puanı</th>
+                <th>Ürün Fiyatı</th>
+                <th>Ürün Detayları</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                int count = 1;
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@count</td>
+                        <td>@item.product_title</td>
+                        <td>@item.product_rating</td>
+                        <td>
+                            @(item.typical_price_range != null && item.typical_price_range.Any()
+                                ? item.typical_price_range.First()
+                                : "Fiyat yok")
+                        </td>
+                        <td>
+                            <a href="@item.product_page_url" class="btn btn-primary btn-sm" target="_blank">
+                                Ürün Detayları
+                            </a>
+                        </td>
+                    </tr>
+                    count++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center">Ürün bulunamadı.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
